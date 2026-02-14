@@ -1,0 +1,17 @@
+﻿{
+  "courseTitle": "WARB Trainer",
+  "weeks": [
+    { "week": "week01", "title": "Woche 01 — Grundlagen & Setup", "file": "week01.json" },
+    { "week": "week02", "title": "Woche 02 — Rechtliche Grundlagen", "file": "week02.json" },
+    { "week": "week03", "title": "Woche 03 — Ethik & Verantwortung", "file": "week03.json" },
+    { "week": "week04", "title": "Woche 04 — Datenschutz & Sicherheit", "file": "week04.json" },
+    { "week": "week05", "title": "Woche 05 — Bias & Fairness", "file": "week05.json" },
+    { "week": "week06", "title": "Woche 06 — Transparenz & Erklärbarkeit", "file": "week06.json" },
+    { "week": "week07", "title": "Woche 07 — Governance & Rollen", "file": "week07.json" },
+    { "week": "week08", "title": "Woche 08 — Datenqualität & Dokumentation", "file": "week08.json" },
+    { "week": "week09", "title": "Woche 09 — Risikomanagement & Controls", "file": "week09.json" },
+    { "week": "week10", "title": "Woche 10 — Modell-Lifecycle & Monitoring", "file": "week10.json" },
+    { "week": "week11", "title": "Woche 11 — Audits, Nachweise & Reporting", "file": "week11.json" },
+    { "week": "week12", "title": "Woche 12 — Prüfungsvorbereitung", "file": "week12.json" }
+  ]
+}

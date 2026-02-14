@@ -1,0 +1,118 @@
+﻿{
+  "week": "week01",
+  "title": "WARB Pilot – Woche 01 (Start: Entscheidungen)",
+  "questions": [
+    {
+      "id": "w1-q01",
+      "type": "mcq",
+      "question": "Du bist Startreferee. Ein Athlet wird wegen Fehlstarts angezeigt, aber du bist überzeugt, dass das Start-Informationssystem falsch ausgelöst hat. Was ist die korrekte Entscheidung?",
+      "choices": [
+        "Die Anzeige des Systems gilt immer – du darfst nicht eingreifen.",
+        "Du kannst den Fehlstart annullieren, wenn du entscheidest, dass das System nicht korrekt funktioniert hat.",
+        "Du musst den Start sofort abbrechen und alle Athleten disqualifizieren.",
+        "Du ignorierst den Start und lässt die Bahnrichter entscheiden."
+      ],
+      "answerIndex": 1,
+      "explanation": "Als Startreferee darfst du eingreifen, wenn du feststellst, dass das Start-Informationssystem nicht korrekt funktioniert hat. Dann kann die automatische Fehlstart-Anzeige korrigiert werden.",
+      "source": { "doc": "Start Referees (EN)", "section": "Role / Interaction with Start Information", "page": "p. 1" }
+    },
+    {
+      "id": "w1-q02",
+      "type": "mcq",
+      "question": "Nach einem Start gibt es Uneinigkeit im Startteam: Einige meinen, der Start war sauber, andere sehen einen Fehlstart. Wer trifft die Entscheidung über die Start-Fakten in so einem Fall?",
+      "choices": [
+        "Der Starter",
+        "Der Startreferee",
+        "Der Zeitmesschef",
+        "Der technische Delegierte"
+      ],
+      "answerIndex": 1,
+      "explanation": "Bei Meinungsverschiedenheiten im Startteam liegt die Entscheidung über die relevanten Start-Fakten beim Startreferee.",
+      "source": { "doc": "Start Referees (EN)", "section": "Role / Decision authority", "page": "p. 1" }
+    },
+    {
+      "id": "w1-q03",
+      "type": "mcq",
+      "question": "Du beobachtest einen Start, der korrekt abläuft. Die Technik meldet jedoch keinen Fehlstart, obwohl du einen klaren Fehlstart gesehen hast. Was ist die richtige Reaktion?",
+      "choices": [
+        "Du greifst nicht ein, weil nur die Technik zählt.",
+        "Du unterbrichst/stopst den Startablauf und behandelst es als Fehlstart basierend auf deiner Wahrnehmung.",
+        "Du wartest bis nach dem Lauf und disqualifizierst dann rückwirkend ohne Anhörung.",
+        "Du lässt den Lauf laufen und ignorierst es komplett."
+      ],
+      "answerIndex": 1,
+      "explanation": "Wenn du als Startreferee einen klaren Fehlstart wahrnimmst, ist die Entscheidung nicht ausschließlich von der Technik abhängig. Du kannst handeln, wenn die Situation es erfordert.",
+      "source": { "doc": "Start Referees (EN)", "section": "Role / Decision authority", "page": "p. 1" }
+    },
+    {
+      "id": "w1-q04",
+      "type": "mcq",
+      "question": "Ein Athlet protestiert sofort mündlich, weil er wegen Fehlstarts belastet wurde. Was ist die korrekte, praxisnahe Vorgehensweise im Ablauf?",
+      "choices": [
+        "Protest ignorieren, weil er nicht schriftlich ist.",
+        "Den Athleten (falls sinnvoll) zunächst unter Protest weiter teilnehmen lassen und den Protest formal behandeln.",
+        "Den Athleten sofort disqualifizieren, weil Protest = Unsportlichkeit.",
+        "Den Lauf abbrechen und komplett neu starten, unabhängig von der Lage."
+      ],
+      "answerIndex": 1,
+      "explanation": "Ein unmittelbarer Protest kann dazu führen, dass ein Athlet unter Protest weiter teilnehmen darf, während die Situation anschließend korrekt geklärt wird.",
+      "source": { "doc": "Start Referees (EN)", "section": "Protest at the start (procedural handling)", "page": "p. 1" }
+    },
+    {
+      "id": "w1-q05",
+      "type": "mcq",
+      "question": "Du bist Startreferee und ein Athlet verursacht ein erstes klares Abbruch-Verhalten vor dem Start (z.B. deutliches Zucken/Bewegung). Was ist die korrekte Sanktion im ersten Schritt?",
+      "choices": [
+        "Keine Reaktion – nur beim zweiten Mal zählt es.",
+        "Verwarnung (gelbe Karte / Warnung) für den Athleten.",
+        "Sofortige Disqualifikation (rote Karte).",
+        "Der Starter entscheidet allein, du greifst nie ein."
+      ],
+      "answerIndex": 1,
+      "explanation": "Beim ersten relevanten Verstoß ist die praxisnahe Reaktion eine Verwarnung. Eine Disqualifikation folgt typischerweise erst bei Wiederholung oder schwerem Fall.",
+      "source": { "doc": "Start Referees (EN)", "section": "Abort the Start / Sanctions", "page": "p. 2" }
+    },
+    {
+      "id": "w1-q06",
+      "type": "mcq",
+      "question": "Du hast bereits verwarnt. Derselbe Athlet verursacht erneut ein startstörendes Verhalten. Was ist jetzt die korrekte Konsequenz?",
+      "choices": [
+        "Noch eine Verwarnung – es gibt keine Eskalation.",
+        "Disqualifikation (rote Karte), weil es die Wiederholung nach Verwarnung ist.",
+        "Alle Athleten werden disqualifiziert, weil der Start abgebrochen wurde.",
+        "Der Lauf wird automatisch annulliert, ohne Sanktionen."
+      ],
+      "answerIndex": 1,
+      "explanation": "Nach einer Verwarnung führt die Wiederholung typischerweise zur Disqualifikation, weil die Eskalationslogik genau dafür vorgesehen ist.",
+      "source": { "doc": "Start Referees (EN)", "section": "Abort the Start / Second offence", "page": "p. 2" }
+    },
+    {
+      "id": "w1-q07",
+      "type": "mcq",
+      "question": "Ein Athlet reagiert am Start, aber du hältst den Grund für plausibel (z.B. äußerer Einfluss). Was ist die korrekte Entscheidung?",
+      "choices": [
+        "Du musst zwingend verwarnen, egal warum.",
+        "Du kannst entscheiden, dass kein Fehlstart / keine Verwarnung vorliegt, wenn der Grund plausibel ist.",
+        "Du disqualifizierst vorsorglich, um Diskussionen zu vermeiden.",
+        "Du lässt nur den Athleten neu starten."
+      ],
+      "answerIndex": 1,
+      "explanation": "Wenn ein plausibler Grund vorliegt, kannst du als Startreferee entscheiden, dass kein sanktionierbarer Fehlstart/Verstoß vorliegt.",
+      "source": { "doc": "Start Referees (EN)", "section": "Abort the Start / Reasonable cause", "page": "p. 2" }
+    },
+    {
+      "id": "w1-q08",
+      "type": "mcq",
+      "question": "Was ist ein professioneller Grundsatz für dich als Startreferee in Bezug auf äußere Bedingungen (Umgebung/Einflüsse), die den Start beeinflussen können?",
+      "choices": [
+        "Umgebung ist irrelevant – nur der Bewegungsimpuls zählt.",
+        "Du sollst bewusst auf Umgebungs-/äußere Einflüsse achten, bevor du eine Sanktion setzt.",
+        "Du überlässt alle Umgebungsfragen dem Stadionsprecher.",
+        "Du entscheidest nur nach Techniksignal, nie nach Beobachtung."
+      ],
+      "answerIndex": 1,
+      "explanation": "Ein professioneller Startreferee berücksichtigt mögliche äußere Einflüsse, bevor er sanktioniert – das reduziert Fehlentscheidungen und erhöht Fairness.",
+      "source": { "doc": "Start Referees (EN)", "section": "Awareness / External influences", "page": "p. 2" }
+    }
+  ]
+}
