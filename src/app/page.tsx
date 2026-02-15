@@ -202,7 +202,7 @@ export default function Home() {
   }, [week, correctCount]);
 
   return (
-    <main className="max-w-3xl mx-auto p-6 font-sans">
+    <main className="max-w-3xl mx-auto p-6 font-sans bg-white text-gray-900 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold mb-1">WARB Trainer</h1>
         <p className="text-sm opacity-70">
