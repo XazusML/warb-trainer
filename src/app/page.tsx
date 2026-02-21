@@ -23,8 +23,8 @@ type Question = {
 };
 
 type WeekFile = {
-  week: string;   // z.B. "week01" (technischer Key)
-  title: string;  // Anzeige-Titel (deutsch)
+  week: string; // technischer Key
+  title: string; // Anzeige-Titel (deutsch)
   questions: Question[];
 };
 
@@ -53,7 +53,7 @@ export default function Home() {
   const [picked, setPicked] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  // ✅ NEU: Statistik
+  // Statistik
   const [correctCount, setCorrectCount] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
 
@@ -150,11 +150,11 @@ export default function Home() {
       const json = (await fetchJsonFromStorage(selectedFile)) as WeekFile;
 
       if (!json || !Array.isArray(json.questions)) {
-        throw new Error('Wochen-JSON ungültig. Erwartet: { week, title, questions: [...] }.');
+        throw new Error('JSON ungültig. Erwartet: { week, title, questions: [...] }.');
       }
 
       if (json.questions.length === 0) {
-        throw new Error('Diese Woche enthält noch keine Fragen.');
+        throw new Error('Diese Rubrik enthält noch keine Fragen.');
       }
 
       setWeek(json);
@@ -169,7 +169,7 @@ export default function Home() {
   function submit() {
     if (picked === null || !current) return;
 
-    // ✅ nur einmal pro Frage zählen
+    // nur einmal pro Frage zählen
     if (!showResult) {
       setAnsweredCount((v) => v + 1);
       if (picked === current.answerIndex) setCorrectCount((v) => v + 1);
@@ -194,7 +194,7 @@ export default function Home() {
     return idx >= week.questions.length - 1;
   }, [week, idx]);
 
-  // ✅ Prozent richtig (bezogen auf ALLE Fragen der Woche)
+  // Prozent richtig (bezogen auf ALLE Fragen der Rubrik)
   const percentCorrect = useMemo(() => {
     if (!week) return 0;
     const total = week.questions.length || 1;
@@ -204,24 +204,35 @@ export default function Home() {
   return (
     <main className="max-w-3xl mx-auto p-6 font-sans bg-white text-gray-900 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold mb-1">WARB Trainer</h1>
+        <h1 className="text-2xl font-semibold mb-1">
+          Fragen zur Vorbereitung: Schiedsrichterprüfung (WAR & WARB)
+        </h1>
         <p className="text-sm opacity-70">
-          Bucket: <b>{bucket}</b> · Index: <b>{indexFile}</b>
+          Bitte gib deine E-Mail-Adresse ein. Du erhältst per E-Mail einen Magic Link, mit dem du dich anmelden kannst.
+        </p>
+        <p className="text-xs opacity-60 mt-2">
+          (Technik: Bucket <b>{bucket}</b> · Index <b>{indexFile}</b>)
         </p>
       </div>
 
       {!userEmail ? (
         <div className="border rounded-xl p-5 space-y-3">
-          <p className="font-medium">Login via Magic Link</p>
+          <p className="font-medium">Anmelden</p>
+          <p className="text-sm opacity-70">
+            Trage deine E-Mail-Adresse ein und klicke auf „Magic Link senden“. Öffne danach den Link in deiner E-Mail.
+          </p>
+
           <input
             className="w-full border rounded p-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="email@domain.com"
+            placeholder="deine.email@domain.com"
           />
+
           <button className="w-full bg-black text-white rounded p-2" onClick={sendMagicLink}>
             Magic Link senden
           </button>
+
           {msg && <p className="text-sm opacity-80">{msg}</p>}
         </div>
       ) : (
@@ -235,16 +246,16 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Index / Wochen-Auswahl */}
+          {/* Index / Rubrik-Auswahl */}
           <div className="border rounded-xl p-5 space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="font-semibold">Kurswochen</h2>
+              <h2 className="font-semibold">Rubriken & Fragenkataloge</h2>
               <button
                 className="bg-black text-white rounded px-3 py-2 disabled:opacity-50"
                 onClick={loadIndex}
                 disabled={indexLoading}
               >
-                {indexLoading ? 'Lädt…' : 'Wochenliste laden'}
+                {indexLoading ? 'Lädt…' : 'Liste laden'}
               </button>
             </div>
 
@@ -253,7 +264,7 @@ export default function Home() {
             {weeks.length > 0 && (
               <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <div className="w-full">
-                  <label className="text-sm opacity-70">Woche auswählen</label>
+                  <label className="text-sm opacity-70">Rubrik auswählen</label>
                   <select
                     className="w-full border rounded p-2 mt-1"
                     value={selectedFile}
@@ -317,13 +328,7 @@ export default function Home() {
                   const correctStyle = 'border-green-600 bg-green-100';
                   const wrongStyle = 'border-red-600 bg-red-100';
 
-                  const className = [
-                    base,
-                    normal,
-                    selected ? selectedStyle : '',
-                    correct ? correctStyle : '',
-                    wrongSelected ? wrongStyle : '',
-                  ]
+                  const className = [base, normal, selected ? selectedStyle : '', correct ? correctStyle : '', wrongSelected ? wrongStyle : '']
                     .filter(Boolean)
                     .join(' ');
 
@@ -349,11 +354,7 @@ export default function Home() {
               </div>
 
               <div className="flex gap-2">
-                <button
-                  className="bg-black text-white rounded px-4 py-2 disabled:opacity-50"
-                  onClick={submit}
-                  disabled={picked === null || showResult}
-                >
+                <button className="bg-black text-white rounded px-4 py-2 disabled:opacity-50" onClick={submit} disabled={picked === null || showResult}>
                   Prüfen
                 </button>
 
@@ -381,9 +382,7 @@ export default function Home() {
 
               {showResult && (
                 <div className="text-sm space-y-2">
-                  <div className="font-medium">
-                    {picked === current.answerIndex ? '✅ Richtig' : '❌ Falsch'}
-                  </div>
+                  <div className="font-medium">{picked === current.answerIndex ? '✅ Richtig' : '❌ Falsch'}</div>
 
                   {current.explanation && (
                     <div className="opacity-90">
@@ -405,11 +404,7 @@ export default function Home() {
                         <b>Dokument:</b> {current.source.doc}
                       </div>
 
-                      {current.source.quote && (
-                        <div className="mt-2 border-l-4 pl-3 opacity-70">
-                          „{current.source.quote}“
-                        </div>
-                      )}
+                      {current.source.quote && <div className="mt-2 border-l-4 pl-3 opacity-70">„{current.source.quote}“</div>}
 
                       {current.source.link && (
                         <div className="mt-2">
