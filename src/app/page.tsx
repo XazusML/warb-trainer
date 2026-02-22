@@ -23,8 +23,8 @@ type Question = {
 };
 
 type WeekFile = {
-  week: string; // technischer Key
-  title: string; // Anzeige-Titel (deutsch)
+  week: string;
+  title: string;
   questions: Question[];
 };
 
@@ -53,7 +53,6 @@ export default function Home() {
   const [picked, setPicked] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  // Statistik
   const [correctCount, setCorrectCount] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
 
@@ -92,11 +91,9 @@ export default function Home() {
   }
 
   async function fetchJsonFromStorage(path: string): Promise<any> {
-    // Prefer public URL (bucket is public)
     const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     let urlToFetch = data?.publicUrl;
 
-    // Fallback signed URL (if later you switch bucket to private)
     if (!urlToFetch) {
       const { data: signed, error } = await supabase.storage.from(bucket).createSignedUrl(path, 60);
       if (error || !signed?.signedUrl) throw new Error(error?.message || 'Signed URL konnte nicht erstellt werden.');
@@ -152,7 +149,6 @@ export default function Home() {
       if (!json || !Array.isArray(json.questions)) {
         throw new Error('JSON ungültig. Erwartet: { week, title, questions: [...] }.');
       }
-
       if (json.questions.length === 0) {
         throw new Error('Diese Rubrik enthält noch keine Fragen.');
       }
@@ -173,7 +169,6 @@ export default function Home() {
       setAnsweredCount((v) => v + 1);
       if (picked === current.answerIndex) setCorrectCount((v) => v + 1);
     }
-
     setShowResult(true);
   }
 
@@ -201,24 +196,49 @@ export default function Home() {
 
   return (
     <main className="max-w-3xl mx-auto p-6 font-sans bg-white text-gray-900 min-h-screen">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold mb-1">
-          Willkommen zur Schiedsrichter-Prüfungsvorbereitung (WAR &amp; WARB)
-        </h1>
-        <p className="text-sm opacity-70">
-          Bitte gib deine E-Mail-Adresse unten ein. Du erhältst per E-Mail einen Link (Magic Link), um dich einzuloggen.
-        </p>
-        <p className="text-xs opacity-60 mt-2">
-          Powered by <b>WHATIF..</b> · Garcia
-        </p>
+      {/* Header */}
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="flex items-center gap-3 mb-2">
+            {/* Optionales Logo: lege public/logo.svg oder public/logo.png an */}
+            <img
+              src="/logo.svg"
+              alt="Logo"
+              className="h-9 w-9 rounded-md border object-contain"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = 'none';
+              }}
+            />
+
+            <h1 className="text-2xl font-semibold leading-tight whitespace-normal break-words">
+              Willkommen zur Schiedsrichter-Prüfungsvorbereitung (WAR &amp; WARB)
+            </h1>
+          </div>
+
+          <p className="text-sm opacity-70">
+            Bitte gib deine E-Mail-Adresse unten ein. Du erhältst per E-Mail einen Link (Magic Link), um dich einzuloggen.
+          </p>
+        </div>
+
+        <div className="text-right shrink-0">
+          <div className="text-xs opacity-60">
+            Powered by <b>WHATIF..</b> · Garcia
+          </div>
+        </div>
       </div>
 
       {!userEmail ? (
         <div className="border rounded-xl p-5 space-y-3">
-          <p className="font-medium">Anmelden</p>
-          <p className="text-sm opacity-70">
-            1) E-Mail eingeben · 2) „Magic Link senden“ klicken · 3) E-Mail öffnen und den Link anklicken.
-          </p>
+          <p className="font-medium">Anmeldung</p>
+
+          <div className="text-sm opacity-80">
+            <div className="font-medium mb-1">Um dich anzumelden:</div>
+            <ol className="list-decimal ml-5 space-y-1">
+              <li>E-Mail-Adresse eingeben</li>
+              <li>Auf „Magic Link senden“ klicken</li>
+              <li>E-Mail öffnen und den Link anklicken</li>
+            </ol>
+          </div>
 
           <input
             className="w-full border rounded p-2"
@@ -244,6 +264,7 @@ export default function Home() {
             </button>
           </div>
 
+          {/* Rubrik-Auswahl */}
           <div className="border rounded-xl p-5 space-y-3">
             <div className="flex items-center justify-between gap-3">
               <h2 className="font-semibold">Rubriken &amp; Fragenkataloge</h2>
@@ -295,6 +316,7 @@ export default function Home() {
             )}
           </div>
 
+          {/* Frage */}
           {week && current && (
             <div className="border rounded-xl p-6 space-y-4">
               <div className="flex items-center justify-between text-sm opacity-70">
