@@ -73,7 +73,7 @@ export default function Home() {
       email,
       options: { emailRedirectTo: window.location.origin },
     });
-    setMsg(error ? error.message : 'Magic Link gesendet. Bitte E-Mail prüfen.');
+    setMsg(error ? error.message : 'Link gesendet. Bitte E-Mail prüfen und den Magic Link öffnen.');
   }
 
   async function logout() {
@@ -169,7 +169,6 @@ export default function Home() {
   function submit() {
     if (picked === null || !current) return;
 
-    // nur einmal pro Frage zählen
     if (!showResult) {
       setAnsweredCount((v) => v + 1);
       if (picked === current.answerIndex) setCorrectCount((v) => v + 1);
@@ -194,7 +193,6 @@ export default function Home() {
     return idx >= week.questions.length - 1;
   }, [week, idx]);
 
-  // Prozent richtig (bezogen auf ALLE Fragen der Rubrik)
   const percentCorrect = useMemo(() => {
     if (!week) return 0;
     const total = week.questions.length || 1;
@@ -205,13 +203,13 @@ export default function Home() {
     <main className="max-w-3xl mx-auto p-6 font-sans bg-white text-gray-900 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold mb-1">
-          Fragen zur Vorbereitung: Schiedsrichterprüfung (WAR &amp; WARB)
+          Willkommen zur Schiedsrichter-Prüfungsvorbereitung (WAR &amp; WARB)
         </h1>
         <p className="text-sm opacity-70">
-          Bitte gib deine E-Mail-Adresse ein. Du erhältst per E-Mail einen Magic Link. Öffne den Link, um dich anzumelden.
+          Bitte gib deine E-Mail-Adresse unten ein. Du erhältst per E-Mail einen Link (Magic Link), um dich einzuloggen.
         </p>
         <p className="text-xs opacity-60 mt-2">
-          (Technik: Bucket <b>{bucket}</b> · Index <b>{indexFile}</b>)
+          Powered by <b>WHATIF..</b> · Garcia
         </p>
       </div>
 
@@ -219,7 +217,7 @@ export default function Home() {
         <div className="border rounded-xl p-5 space-y-3">
           <p className="font-medium">Anmelden</p>
           <p className="text-sm opacity-70">
-            Trage deine E-Mail-Adresse ein und klicke auf „Magic Link senden“. Prüfe danach deine E-Mails und öffne den Link.
+            1) E-Mail eingeben · 2) „Magic Link senden“ klicken · 3) E-Mail öffnen und den Link anklicken.
           </p>
 
           <input
@@ -246,7 +244,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Index / Rubrik-Auswahl */}
           <div className="border rounded-xl p-5 space-y-3">
             <div className="flex items-center justify-between gap-3">
               <h2 className="font-semibold">Rubriken &amp; Fragenkataloge</h2>
@@ -298,7 +295,6 @@ export default function Home() {
             )}
           </div>
 
-          {/* Frage */}
           {week && current && (
             <div className="border rounded-xl p-6 space-y-4">
               <div className="flex items-center justify-between text-sm opacity-70">
@@ -328,7 +324,13 @@ export default function Home() {
                   const correctStyle = 'border-green-600 bg-green-100';
                   const wrongStyle = 'border-red-600 bg-red-100';
 
-                  const className = [base, normal, selected ? selectedStyle : '', correct ? correctStyle : '', wrongSelected ? wrongStyle : '']
+                  const className = [
+                    base,
+                    normal,
+                    selected ? selectedStyle : '',
+                    correct ? correctStyle : '',
+                    wrongSelected ? wrongStyle : '',
+                  ]
                     .filter(Boolean)
                     .join(' ');
 
@@ -354,7 +356,11 @@ export default function Home() {
               </div>
 
               <div className="flex gap-2">
-                <button className="bg-black text-white rounded px-4 py-2 disabled:opacity-50" onClick={submit} disabled={picked === null || showResult}>
+                <button
+                  className="bg-black text-white rounded px-4 py-2 disabled:opacity-50"
+                  onClick={submit}
+                  disabled={picked === null || showResult}
+                >
                   Prüfen
                 </button>
 
@@ -404,7 +410,11 @@ export default function Home() {
                         <b>Dokument:</b> {current.source.doc}
                       </div>
 
-                      {current.source.quote && <div className="mt-2 border-l-4 pl-3 opacity-70">„{current.source.quote}“</div>}
+                      {current.source.quote && (
+                        <div className="mt-2 border-l-4 pl-3 opacity-70">
+                          „{current.source.quote}“
+                        </div>
+                      )}
 
                       {current.source.link && (
                         <div className="mt-2">
