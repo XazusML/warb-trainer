@@ -32,9 +32,15 @@ type IndexFile = {
   weeks: Array<{ file: string; week: string; title: string }>;
 };
 
+type DocsIndexFile = {
+  title?: string;
+  documents: Array<{ title: string; path: string }>;
+};
+
 export default function Home() {
   const bucket = process.env.NEXT_PUBLIC_BUCKET_NAME!;
   const indexFile = process.env.NEXT_PUBLIC_INDEX_FILE || 'index.json';
+  const docsIndexFile = 'Dokumentation/docs_index.json';
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [email, setEmail] = useState('');
@@ -53,8 +59,15 @@ export default function Home() {
   const [picked, setPicked] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
+  // Statistik
   const [correctCount, setCorrectCount] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
+
+  // Hilfsdokumente
+  const [docsLoading, setDocsLoading] = useState(false);
+  const [docsErr, setDocsErr] = useState('');
+  const [docsTitle, setDocsTitle] = useState<string>('Hilfsdokumente (PDF)');
+  const [docs, setDocs] = useState<Array<{ title: string; path: string }>>([]);
 
   const current = useMemo(() => week?.questions?.[idx] ?? null, [week, idx]);
 
@@ -78,6 +91,8 @@ export default function Home() {
   async function logout() {
     await supabase.auth.signOut();
     setUserEmail(null);
+
+    // Reset Quiz
     setWeek(null);
     setWeeks([]);
     setSelectedFile('');
@@ -88,12 +103,19 @@ export default function Home() {
     setShowResult(false);
     setCorrectCount(0);
     setAnsweredCount(0);
+
+    // Reset Docs
+    setDocs([]);
+    setDocsErr('');
+    setDocsLoading(false);
   }
 
   async function fetchJsonFromStorage(path: string): Promise<any> {
+    // Prefer public URL (bucket is public)
     const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     let urlToFetch = data?.publicUrl;
 
+    // Fallback signed URL (if later you switch bucket to private)
     if (!urlToFetch) {
       const { data: signed, error } = await supabase.storage.from(bucket).createSignedUrl(path, 60);
       if (error || !signed?.signedUrl) throw new Error(error?.message || 'Signed URL konnte nicht erstellt werden.');
@@ -149,6 +171,7 @@ export default function Home() {
       if (!json || !Array.isArray(json.questions)) {
         throw new Error('JSON ungültig. Erwartet: { week, title, questions: [...] }.');
       }
+
       if (json.questions.length === 0) {
         throw new Error('Diese Rubrik enthält noch keine Fragen.');
       }
@@ -159,6 +182,23 @@ export default function Home() {
       setWeek(null);
     } finally {
       setLoadingQ(false);
+    }
+  }
+
+  async function loadDocs() {
+    setDocsLoading(true);
+    setDocsErr('');
+    try {
+      const json = (await fetchJsonFromStorage(docsIndexFile)) as DocsIndexFile;
+      if (!json?.documents || !Array.isArray(json.documents)) {
+        throw new Error('docs_index.json ungültig. Erwartet: { "documents": [ {title, path}, ... ] }');
+      }
+      setDocsTitle(json.title || 'Hilfsdokumente (PDF)');
+      setDocs(json.documents);
+    } catch (e: any) {
+      setDocsErr(e?.message || String(e));
+    } finally {
+      setDocsLoading(false);
     }
   }
 
@@ -312,6 +352,42 @@ export default function Home() {
               <div className="text-sm opacity-80">
                 <div className="font-medium">{week.title}</div>
                 <div>Anzahl Fragen: {week.questions.length}</div>
+              </div>
+            )}
+          </div>
+
+          {/* Hilfsdokumente */}
+          <div className="border rounded-xl p-5 space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="font-semibold">{docsTitle}</h2>
+              <button
+                className="bg-black text-white rounded px-3 py-2 disabled:opacity-50"
+                onClick={loadDocs}
+                disabled={docsLoading}
+              >
+                {docsLoading ? 'Lädt…' : 'Dokumente laden'}
+              </button>
+            </div>
+
+            {docsErr && <div className="text-sm text-red-600 whitespace-pre-wrap">{docsErr}</div>}
+
+            {docs.length > 0 ? (
+              <ul className="list-disc ml-5 space-y-1 text-sm">
+                {docs.map((d) => {
+                  const { data } = supabase.storage.from(bucket).getPublicUrl(d.path);
+                  const url = data?.publicUrl || '#';
+                  return (
+                    <li key={d.path}>
+                      <a className="underline" href={url} target="_blank" rel="noreferrer">
+                        {d.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="text-sm opacity-70">
+                Noch keine Dokumente geladen.
               </div>
             )}
           </div>
