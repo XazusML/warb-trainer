@@ -205,10 +205,10 @@ export default function Home() {
     <main className="max-w-3xl mx-auto p-6 font-sans bg-white text-gray-900 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold mb-1">
-          Fragen zur Vorbereitung: Schiedsrichterprüfung (WAR & WARB)
+          Fragen zur Vorbereitung: Schiedsrichterprüfung (WAR &amp; WARB)
         </h1>
         <p className="text-sm opacity-70">
-          Bitte gib deine E-Mail-Adresse ein. Du erhältst per E-Mail einen Magic Link, mit dem du dich anmelden kannst.
+          Bitte gib deine E-Mail-Adresse ein. Du erhältst per E-Mail einen Magic Link. Öffne den Link, um dich anzumelden.
         </p>
         <p className="text-xs opacity-60 mt-2">
           (Technik: Bucket <b>{bucket}</b> · Index <b>{indexFile}</b>)
@@ -219,7 +219,7 @@ export default function Home() {
         <div className="border rounded-xl p-5 space-y-3">
           <p className="font-medium">Anmelden</p>
           <p className="text-sm opacity-70">
-            Trage deine E-Mail-Adresse ein und klicke auf „Magic Link senden“. Öffne danach den Link in deiner E-Mail.
+            Trage deine E-Mail-Adresse ein und klicke auf „Magic Link senden“. Prüfe danach deine E-Mails und öffne den Link.
           </p>
 
           <input
@@ -249,7 +249,7 @@ export default function Home() {
           {/* Index / Rubrik-Auswahl */}
           <div className="border rounded-xl p-5 space-y-3">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="font-semibold">Rubriken & Fragenkataloge</h2>
+              <h2 className="font-semibold">Rubriken &amp; Fragenkataloge</h2>
               <button
                 className="bg-black text-white rounded px-3 py-2 disabled:opacity-50"
                 onClick={loadIndex}
